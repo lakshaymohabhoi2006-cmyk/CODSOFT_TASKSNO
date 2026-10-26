@@ -1,12 +1,6 @@
-# quizletto
+# Quizletto
 
 A quiz maker built with React, Express, and MongoDB. Make a multiple-choice quiz, take quizzes one question at a time, and review your score and answers.
-
-## Public demo
-
-Open the [GitHub Pages demo](https://lakshaymohabhoi2006-cmyk.github.io/CODSOFT_TASKSNO/). It starts with sample quizzes and needs no setup. For the demo, accounts, quizzes, and results are saved in the current browser only. They are not shared with other visitors, and demo login is not real authentication.
-
-Changes to this project on the repository's `main` branch automatically build and publish the demo through GitHub Actions.
 
 ## Run locally
 
@@ -18,9 +12,27 @@ You need Node.js and a MongoDB connection (a local MongoDB server or MongoDB Atl
 4. Start the React app in another terminal: `npm run dev`
 5. Open the Vite URL shown in the terminal, usually `http://localhost:5173`.
 
-The server listens on port 5000 by default. Do not commit `.env`; the repository ignores environment files.
+The API listens on `http://localhost:5000` by default. The frontend uses `http://localhost:5000/api` when `VITE_API_URL` is not set. Do not commit `.env`; the repository ignores environment files.
 
 When `VITE_DEMO_MODE=true` is set during the frontend build, the site uses browser storage and does not need the API or database. Leave this variable unset for the database-backed API.
+
+## Deploy the frontend to Vercel
+
+Create a new Vercel project from this repository and set its root directory to `online-quiz-maker`. Vercel will use `vercel.json` to build the Vite client and serve its routes correctly.
+
+For a no-database demo, add this environment variable in Vercel:
+
+```text
+VITE_DEMO_MODE=true
+```
+
+For the full API-backed version, leave demo mode unset and add:
+
+```text
+VITE_API_URL=https://your-api-domain.example/api
+```
+
+The Express API still needs to run on a Node host such as Render with `MONGO_URI`, `JWT_SECRET`, and `CLIENT_URL` configured. `localhost` is for local development only; Vercel will provide the public frontend domain after deployment.
 
 ## API
 
