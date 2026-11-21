@@ -3,57 +3,29 @@
 import { FormEvent, useState } from 'react';
 import Link from 'next/link';
 
+const fieldClass = 'w-full border border-[#d9d1c2] bg-[#fbf9f3] px-3 py-3 text-sm text-[#211f1b] focus:border-[#9b422a] focus:outline-none';
+
 export default function RegisterPage() {
   const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSubmitted(true);
-  };
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); setSubmitted(true); };
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-20 sm:px-6 lg:px-8">
-      <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Start here</p>
-        <h1 className="mt-3 text-3xl font-black text-slate-900 dark:text-white">Create account</h1>
-
+    <div className="mx-auto max-w-2xl px-5 py-12 sm:px-8 lg:py-16">
+      <div className="border-t-2 border-[#9b422a] bg-[#fbf9f3] p-6 sm:p-8">
+        <p className="text-sm text-[#9b422a]">Join JobBoard</p>
+        <h1 className="mt-2 text-3xl font-medium tracking-tight text-[#211f1b]">Create an account</h1>
         {submitted ? (
-          <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700 dark:border-emerald-900 dark:bg-emerald-500/10 dark:text-emerald-300">
-            Account created successfully. Welcome to JobBoard.
-          </div>
+          <div className="mt-6 border border-[#cdb3a4] bg-[#f4e9e2] p-4 text-sm leading-6 text-[#9b422a]">Account details received. You can continue to your dashboard.</div>
         ) : (
           <form onSubmit={handleSubmit} className="mt-6 grid gap-5 md:grid-cols-2">
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">Full name</label>
-              <input type="text" required className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">Role</label>
-              <select className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white">
-                <option>Candidate</option>
-                <option>Employer</option>
-              </select>
-            </div>
-            <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">Email</label>
-              <input type="email" required className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
-            </div>
-            <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">Password</label>
-              <input type="password" required className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
-            </div>
-            <div className="md:col-span-2">
-              <button type="submit" className="w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
-                Create account
-              </button>
-            </div>
+            <div><label className="mb-2 block text-sm text-[#5b564e]">Full name</label><input type="text" required className={fieldClass} /></div>
+            <div><label className="mb-2 block text-sm text-[#5b564e]">I’m joining as</label><select className={fieldClass}><option>Candidate</option><option>Employer</option></select></div>
+            <div className="md:col-span-2"><label className="mb-2 block text-sm text-[#5b564e]">Email</label><input type="email" required className={fieldClass} /></div>
+            <div className="md:col-span-2"><label className="mb-2 block text-sm text-[#5b564e]">Password</label><input type="password" required className={fieldClass} /></div>
+            <div className="md:col-span-2"><button type="submit" className="min-h-11 w-full bg-[#9b422a] px-4 text-sm font-medium text-white hover:bg-[#7d3423]">Create account</button></div>
           </form>
         )}
-
-        <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-300">
-          Already registered?{' '}
-          <Link href="/login" className="font-semibold text-blue-600 dark:text-blue-400">Login</Link>
-        </p>
+        <p className="mt-6 text-sm text-[#5b564e]">Already registered? <Link href="/login" className="font-medium text-[#9b422a] hover:underline">Sign in</Link></p>
       </div>
     </div>
   );

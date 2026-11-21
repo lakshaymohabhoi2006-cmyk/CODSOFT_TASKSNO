@@ -5,72 +5,39 @@ import Link from 'next/link';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { JOBS } from '@/lib/constants';
 
+const fieldClass = 'w-full border border-[#d9d1c2] bg-[#fbf9f3] px-3 py-3 text-sm text-[#211f1b] placeholder:text-[#777064] focus:border-[#9b422a] focus:outline-none';
+
 export default function JobApplyPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const job = JOBS.find((item) => item.id === id);
   const [submitted, setSubmitted] = useState(false);
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); setSubmitted(true); };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSubmitted(true);
-  };
-
-  if (!job) {
-    return <div className="mx-auto max-w-3xl px-4 py-20 text-center text-slate-900 dark:text-white">Job not found.</div>;
-  }
+  if (!job) return <div className="mx-auto max-w-3xl px-5 py-20 text-center text-[#211f1b]">Role not found</div>;
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      <Link href={`/jobs/${job.id}`} className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400">
-        <ArrowLeft size={16} /> Back to job
-      </Link>
-
-      <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-        <div className="mb-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Application</p>
-          <h1 className="mt-3 text-3xl font-black text-slate-900 dark:text-white">Apply for {job.title}</h1>
+    <div className="mx-auto max-w-4xl px-5 py-10 sm:px-8 lg:py-14">
+      <Link href={`/jobs/${job.id}`} className="mb-7 inline-flex items-center gap-2 text-sm text-[#5b564e] hover:text-[#9b422a]"><ArrowLeft size={16} /> Back to role</Link>
+      <div className="border-t-2 border-[#9b422a] bg-[#fbf9f3] px-5 py-7 sm:px-8 sm:py-8">
+        <div className="mb-7 border-b border-[#d9d1c2] pb-5">
+          <p className="text-sm text-[#9b422a]">Application · {job.company}</p>
+          <h1 className="mt-2 text-3xl font-medium tracking-tight text-[#211f1b]">Apply for {job.title}</h1>
         </div>
 
         {submitted ? (
-          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-500/10 dark:text-emerald-300">
-            <div className="flex items-center gap-3">
-              <CheckCircle2 className="h-6 w-6" />
-              <p className="text-lg font-semibold">Application submitted successfully.</p>
-            </div>
-            <p className="mt-2 text-sm">The recruitment team will review your profile and contact you soon.</p>
+          <div className="border border-[#cdb3a4] bg-[#f4e9e2] p-5 text-[#9b422a]">
+            <div className="flex items-center gap-3"><CheckCircle2 className="h-5 w-5" /><p className="font-medium">Application received</p></div>
+            <p className="mt-2 text-sm leading-6">The recruitment team can now review your details for this role.</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="grid gap-5 md:grid-cols-2">
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">Full name</label>
-              <input type="text" required className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none ring-0 transition focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">Email address</label>
-              <input type="email" required className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none ring-0 transition focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">Phone number</label>
-              <input type="tel" required className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none ring-0 transition focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">Portfolio / LinkedIn</label>
-              <input type="url" className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none ring-0 transition focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
-            </div>
-            <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">Cover note</label>
-              <textarea rows={5} required className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none ring-0 transition focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
-            </div>
-            <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">Resume upload</label>
-              <input type="file" accept=".pdf" className="w-full rounded-xl border border-dashed border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300" />
-            </div>
-
-            <div className="md:col-span-2 flex justify-end">
-              <button type="submit" className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
-                Submit application
-              </button>
-            </div>
+          <form onSubmit={handleSubmit} className="grid gap-x-5 gap-y-5 md:grid-cols-2">
+            <div><label className="mb-2 block text-sm text-[#5b564e]">Full name</label><input type="text" required className={fieldClass} /></div>
+            <div><label className="mb-2 block text-sm text-[#5b564e]">Email address</label><input type="email" required className={fieldClass} /></div>
+            <div><label className="mb-2 block text-sm text-[#5b564e]">Phone number</label><input type="tel" required className={fieldClass} /></div>
+            <div><label className="mb-2 block text-sm text-[#5b564e]">Portfolio or LinkedIn</label><input type="url" className={fieldClass} /></div>
+            <div className="md:col-span-2"><label className="mb-2 block text-sm text-[#5b564e]">Cover note</label><textarea rows={5} required className={fieldClass} /></div>
+            <div className="md:col-span-2"><label className="mb-2 block text-sm text-[#5b564e]">Resume (PDF)</label><input type="file" accept=".pdf" className={`${fieldClass} file:mr-3 file:border-0 file:bg-[#ebe5d8] file:px-3 file:py-2 file:text-sm file:text-[#211f1b]`} /></div>
+            <div className="flex justify-end md:col-span-2"><button type="submit" className="min-h-11 bg-[#9b422a] px-5 text-sm font-medium text-white hover:bg-[#7d3423]">Submit application</button></div>
           </form>
         )}
       </div>

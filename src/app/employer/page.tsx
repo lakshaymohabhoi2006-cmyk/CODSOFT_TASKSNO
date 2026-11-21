@@ -1,55 +1,45 @@
 'use client';
 
-import { APPLICATIONS, DASHBOARD_STATS } from '@/lib/constants';
+import { APPLICATIONS, DASHBOARD_STATS, JOBS } from '@/lib/constants';
 
 export default function EmployerDashboardPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mb-10">
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Employer dashboard</p>
-        <h1 className="mt-3 text-3xl font-black text-slate-900 dark:text-white">Hiring overview</h1>
-      </div>
+    <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:px-10 lg:py-16">
+      <header className="mb-8 border-b border-[#d9d1c2] pb-6">
+        <p className="text-sm text-[#9b422a]">Employer dashboard</p>
+        <h1 className="mt-2 text-4xl font-medium tracking-tight text-[#211f1b]">Hiring overview</h1>
+      </header>
 
-      <div className="mb-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        {DASHBOARD_STATS.map((stat) => (
-          <div key={stat.label} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-            <p className="text-sm text-slate-500 dark:text-slate-400">{stat.label}</p>
-            <p className="mt-3 text-3xl font-bold text-slate-900 dark:text-white">{stat.value}</p>
-            <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">{stat.helper}</p>
+      <div className="mb-10 grid gap-0 border-y border-[#d9d1c2] sm:grid-cols-2 xl:grid-cols-4">
+        {DASHBOARD_STATS.map((stat, index) => (
+          <div key={stat.label} className={`px-5 py-5 ${index ? 'border-t border-[#d9d1c2] sm:border-l xl:border-t-0' : ''}`}>
+            <p className="text-sm text-[#5b564e]">{stat.label}</p>
+            <p className="mt-3 font-mono text-3xl tabular-nums text-[#211f1b]">{stat.value}</p>
+            <p className="mt-1 text-xs text-[#777064]">{stat.helper}</p>
           </div>
         ))}
       </div>
 
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white">Recent applicants</h2>
-
-        <div className="mt-6 overflow-x-auto">
+      <section>
+        <div className="mb-4 flex items-end justify-between border-b border-[#d9d1c2] pb-4">
+          <h2 className="text-xl font-medium text-[#211f1b]">Recent applicants</h2>
+          <span className="font-mono text-xs text-[#777064]">{String(APPLICATIONS.length).padStart(2, '0')} records</span>
+        </div>
+        <div className="overflow-x-auto border-y border-[#d9d1c2] bg-[#fbf9f3]">
           <table className="min-w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-slate-200 text-slate-500 dark:border-slate-700 dark:text-slate-300">
-                <th className="pb-3 pr-4 font-medium">Role</th>
-                <th className="pb-3 pr-4 font-medium">Name</th>
-                <th className="pb-3 pr-4 font-medium">Email</th>
-                <th className="pb-3 font-medium">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {APPLICATIONS.map((application) => (
-                <tr key={application.id} className="border-b border-slate-100 last:border-b-0 dark:border-slate-800">
-                  <td className="py-4 pr-4 font-medium text-slate-900 dark:text-white">{application.jobId}</td>
-                  <td className="py-4 pr-4 text-slate-600 dark:text-slate-300">{application.candidateName}</td>
-                  <td className="py-4 pr-4 text-slate-600 dark:text-slate-300">{application.email}</td>
-                  <td className="py-4">
-                    <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${application.status === 'Shortlisted' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300' : application.status === 'Rejected' ? 'bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-300' : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-500/10 dark:text-yellow-300'}`}>
-                      {application.status}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+            <thead><tr className="border-b border-[#d9d1c2] text-[#777064]"><th className="px-4 py-3 font-normal">Role</th><th className="px-4 py-3 font-normal">Name</th><th className="px-4 py-3 font-normal">Email</th><th className="px-4 py-3 font-normal">Status</th></tr></thead>
+            <tbody>{APPLICATIONS.map((application) => {
+              const job = JOBS.find((item) => item.id === application.jobId);
+              return <tr key={application.id} className="border-b border-[#d9d1c2] last:border-0">
+                <td className="whitespace-nowrap px-4 py-4 font-medium text-[#211f1b]">{job?.title ?? application.jobId}</td>
+                <td className="whitespace-nowrap px-4 py-4 text-[#5b564e]">{application.candidateName}</td>
+                <td className="whitespace-nowrap px-4 py-4 text-[#5b564e]">{application.email}</td>
+                <td className="whitespace-nowrap px-4 py-4"><span className={`inline-flex items-center gap-2 text-xs ${application.status === 'Shortlisted' ? 'text-[#9b422a]' : application.status === 'Rejected' ? 'text-[#a4493c]' : 'text-[#777064]'}`}><span className="h-1.5 w-1.5 rounded-full bg-current" />{application.status}</span></td>
+              </tr>;
+            })}</tbody>
           </table>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

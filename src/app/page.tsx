@@ -1,127 +1,128 @@
 import Link from 'next/link';
-import { ArrowRight, BriefcaseBusiness, Search, ShieldCheck, Star } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
 import { JOBS } from '@/lib/constants';
-import JobCard from '@/components/JobCard';
 
 export default function HomePage() {
   const featuredJobs = JOBS.filter((job) => job.featured);
+  const previewJobs = featuredJobs.slice(0, 2);
 
   return (
     <div>
-      <section className="bg-gradient-to-b from-white via-blue-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
-          <div className="flex flex-col justify-center">
-            <span className="mb-4 w-fit rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-blue-700 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-300">
-              Career platform
-            </span>
-            <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
-              Find work that matches your ambition.
+      <section className="border-b border-[#d9d1c2] bg-[#f4f0e7]">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[0.88fr_1.12fr] lg:px-10 lg:py-20">
+          <div className="max-w-xl">
+            <p className="mb-5 font-mono text-xs text-[#9b422a]">Job listings <span className="px-1 text-[#b3a995]">/</span> Search by the details</p>
+            <h1 className="max-w-lg font-serif text-5xl font-normal leading-[1.04] tracking-[-0.035em] text-[#211f1b] sm:text-6xl lg:text-[64px]">
+              Find work by the role, the place, and the pay
             </h1>
-            <p className="mt-5 max-w-xl text-lg text-slate-600 dark:text-slate-300">
-              Discover roles, connect with top employers, and manage your job search in one streamlined place.
+            <p className="mt-5 max-w-lg text-base leading-7 text-[#5b564e]">
+              Browse current openings with salary, location, and requirements shown up front.
             </p>
 
-            <form action="/jobs" className="mt-8 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl shadow-slate-200/50 sm:flex-row dark:border-slate-700 dark:bg-slate-900 dark:shadow-none">
-              <div className="flex flex-1 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-800">
-                <Search className="h-4 w-4 text-slate-500" />
+            <form action="/jobs" className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <label className="flex min-h-12 flex-1 items-center gap-3 border border-[#b3a995] bg-[#fbf9f3] px-4">
+                <Search aria-hidden="true" className="h-4 w-4 shrink-0 text-[#777064]" />
                 <input
                   type="text"
                   name="search"
-                  placeholder="Search jobs, companies or locations"
-                  className="w-full bg-transparent text-sm text-slate-800 placeholder:text-slate-500 focus:outline-none dark:text-slate-100"
+                  aria-label="Search jobs, companies or locations"
+                  placeholder="Title, company, or location"
+                  className="w-full bg-transparent text-sm text-[#211f1b] placeholder:text-[#777064] focus:outline-none"
                 />
-              </div>
-              <button
-                type="submit"
-                className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
-              >
-                Search Jobs
+              </label>
+              <button type="submit" className="inline-flex min-h-12 items-center justify-center gap-2 bg-[#9b422a] px-5 text-sm font-medium text-white hover:bg-[#7d3423]">
+                Find a role <ArrowRight size={16} />
               </button>
             </form>
 
-            <div className="mt-8 flex flex-wrap gap-6 text-sm text-slate-600 dark:text-slate-300">
-              <div className="flex items-center gap-2"><Star className="h-4 w-4 text-yellow-500" /> 20k+ active candidates</div>
-              <div className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-emerald-500" /> Verified employers</div>
+            <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[#5b564e]">
+              <span>Salary ranges shown</span>
+              <span className="text-[#b3a995]">/</span>
+              <span>Requirements listed</span>
             </div>
           </div>
 
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-900 dark:shadow-none">
-            <div className="mb-6 flex items-center justify-between">
+          <div className="border-t-2 border-[#211f1b] bg-[#fbf9f3] px-5 sm:px-7">
+            <div className="flex items-end justify-between gap-4 border-b border-[#d9d1c2] py-5">
               <div>
-                <p className="text-sm text-slate-500 dark:text-slate-400">Popular roles</p>
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white">This week</h2>
+                <p className="font-mono text-xs text-[#777064]">From the current listings</p>
+                <h2 className="mt-1 font-serif text-2xl font-normal tracking-tight text-[#211f1b]">A short list</h2>
               </div>
-              <div className="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700 dark:bg-blue-500/10 dark:text-blue-300">
-                120+ jobs
-              </div>
+              <Link href="/jobs" className="mb-1 inline-flex shrink-0 items-center gap-1 text-sm font-medium text-[#9b422a] hover:text-[#7d3423]">
+                All jobs <ArrowRight size={15} />
+              </Link>
             </div>
-
-            <div className="space-y-4">
-              {featuredJobs.map((job) => (
-                <div key={job.id} className="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800">
-                  <div className="flex items-center justify-between gap-3">
+            <div>
+              {previewJobs.map((job, index) => (
+                <Link key={job.id} href={`/jobs/${job.id}`} className="group grid gap-2 border-b border-[#d9d1c2] py-5 last:border-b-0 sm:grid-cols-[1fr_auto] sm:items-center">
+                  <div className="flex gap-4">
+                    <span className="pt-1 font-mono text-xs tabular-nums text-[#899084]">0{index + 1}</span>
                     <div>
-                      <h3 className="font-semibold text-slate-900 dark:text-white">{job.title}</h3>
-                      <p className="text-sm text-slate-600 dark:text-slate-300">{job.company}</p>
+                      <h3 className="font-medium text-[#211f1b] group-hover:text-[#9b422a]">{job.title}</h3>
+                      <p className="mt-1 text-sm text-[#5b564e]">{job.company} <span className="px-1 text-[#b3a995]">·</span> {job.location}</p>
                     </div>
-                    <span className="rounded-full bg-emerald-100 px-2 py-1 text-[11px] font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
-                      {job.jobType}
-                    </span>
                   </div>
-                  <div className="mt-3 flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
-                    <span>{job.location}</span>
-                    <span>{job.salary}</span>
+                  <div className="pl-8 text-sm text-[#5b564e] sm:pl-0 sm:text-right">
+                    <p className="font-medium text-[#211f1b]">{job.salary}</p>
+                    <p className="mt-1 text-xs text-[#777064]">{job.jobType}</p>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
+            <p className="border-t border-[#d9d1c2] py-3 font-mono text-xs text-[#777064]">Current listings <span className="ml-2 tabular-nums text-[#211f1b]">{String(JOBS.length).padStart(2, '0')}</span></p>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mb-10 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Featured openings</p>
-          <h2 className="mt-3 text-3xl font-bold text-slate-900 dark:text-white">Top jobs for your next move</h2>
+      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:px-10 lg:py-20">
+        <div className="mb-8 flex flex-col justify-between gap-4 border-b border-[#d9d1c2] pb-5 sm:flex-row sm:items-end">
+          <div>
+            <p className="font-mono text-xs text-[#9b422a]">{String(JOBS.length).padStart(2, '0')} listings</p>
+            <h2 className="mt-2 font-serif text-3xl font-normal tracking-tight text-[#211f1b]">Open roles</h2>
+          </div>
+          <Link href="/jobs" className="inline-flex items-center gap-2 text-sm font-medium text-[#9b422a] hover:text-[#7d3423]">Browse all roles <ArrowRight size={16} /></Link>
         </div>
-
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {featuredJobs.map((job) => (
-            <JobCard key={job.id} job={job} />
+        <div className="border-t-2 border-[#211f1b] bg-[#fbf9f3]">
+          {JOBS.map((job, index) => (
+            <Link key={job.id} href={`/jobs/${job.id}`} className="group grid gap-3 border-b border-[#d9d1c2] px-4 py-5 hover:bg-[#ebe5d8] sm:grid-cols-[48px_minmax(0,1fr)_190px_140px_24px] sm:items-center sm:px-5">
+              <span className="font-mono text-xs tabular-nums text-[#9b422a]">{String(index + 1).padStart(2, '0')}</span>
+              <span><span className="block font-medium text-[#211f1b] group-hover:text-[#9b422a]">{job.title}</span><span className="mt-1 block text-sm text-[#5b564e]">{job.company}</span></span>
+              <span className="text-sm text-[#5b564e]">{job.location}</span>
+              <span><span className="block text-sm font-medium text-[#211f1b]">{job.salary}</span><span className="mt-1 block text-xs text-[#777064]">{job.jobType}</span></span>
+              <ArrowRight size={16} className="hidden text-[#9b422a] sm:block" />
+            </Link>
           ))}
         </div>
       </section>
 
-      <section className="bg-slate-900 text-white">
-        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-20 sm:px-6 lg:grid-cols-3 lg:px-8">
-          <div className="rounded-2xl border border-slate-700 bg-slate-800 p-6">
-            <BriefcaseBusiness className="mb-4 h-9 w-9 text-blue-400" />
-            <h3 className="text-xl font-semibold">Smart hiring</h3>
-            <p className="mt-3 text-slate-300">Streamlined hiring workflows with faster screening and better candidate matching.</p>
+      <section className="border-y border-[#d9d1c2] bg-[#ebe5d8]">
+        <div className="mx-auto grid max-w-7xl gap-8 px-5 py-12 sm:px-8 md:grid-cols-3 lg:px-10">
+          <div className="border-t border-[#b3a995] pt-4">
+            <p className="font-mono text-xs text-[#777064]">01</p>
+            <h3 className="mt-4 text-lg font-medium text-[#211f1b]">Search the openings</h3>
+            <p className="mt-2 text-sm leading-6 text-[#5b564e]">Filter by title, location, and employment type.</p>
           </div>
-          <div className="rounded-2xl border border-slate-700 bg-slate-800 p-6">
-            <ShieldCheck className="mb-4 h-9 w-9 text-emerald-400" />
-            <h3 className="text-xl font-semibold">Trusted platform</h3>
-            <p className="mt-3 text-slate-300">Verified employers and secure applicant data for every stage of the hiring journey.</p>
+          <div className="border-t border-[#b3a995] pt-4">
+            <p className="font-mono text-xs text-[#777064]">02</p>
+            <h3 className="mt-4 text-lg font-medium text-[#211f1b]">Read the details</h3>
+            <p className="mt-2 text-sm leading-6 text-[#5b564e]">Review responsibilities, requirements, and salary before applying.</p>
           </div>
-          <div className="rounded-2xl border border-slate-700 bg-slate-800 p-6">
-            <ArrowRight className="mb-4 h-9 w-9 text-cyan-400" />
-            <h3 className="text-xl font-semibold">Actionable results</h3>
-            <p className="mt-3 text-slate-300">Track applications, shortlist talent, and keep the hiring process transparent.</p>
+          <div className="border-t border-[#b3a995] pt-4">
+            <p className="font-mono text-xs text-[#777064]">03</p>
+            <h3 className="mt-4 text-lg font-medium text-[#211f1b]">Follow applications</h3>
+            <p className="mt-2 text-sm leading-6 text-[#5b564e]">Candidates and employers can review application status from their dashboards.</p>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Ready to take the next step?</h2>
-        <p className="mt-4 text-slate-600 dark:text-slate-300">Whether you are hiring or job hunting, the JobBoard platform keeps everything simple, fast and effective.</p>
-        <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Link href="/jobs" className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700">
-            Explore jobs
-          </Link>
-          <Link href="/register" className="rounded-lg border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
-            Create account
-          </Link>
+      <section className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-16 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-10 lg:py-20">
+        <div>
+          <p className="text-sm text-[#9b422a]">Your next step</p>
+          <h2 className="mt-2 text-3xl font-medium tracking-tight text-[#211f1b]">Ready to look around?</h2>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <Link href="/jobs" className="inline-flex min-h-11 items-center gap-2 bg-[#9b422a] px-5 text-sm font-medium text-white hover:bg-[#7d3423]">Explore jobs <ArrowRight size={16} /></Link>
+          <Link href="/register" className="inline-flex min-h-11 items-center border border-[#b3a995] px-5 text-sm font-medium text-[#211f1b] hover:bg-[#ebe5d8]">Create an account</Link>
         </div>
       </section>
     </div>
