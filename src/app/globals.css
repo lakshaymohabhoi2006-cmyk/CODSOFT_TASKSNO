@@ -26,13 +26,6 @@
   --accent-hover: #e49a7f;
 }
 
-@theme inline {
-  --color-background: var(--paper);
-  --color-foreground: var(--ink);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 * { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
